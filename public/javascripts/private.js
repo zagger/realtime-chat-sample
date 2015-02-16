@@ -1,5 +1,5 @@
 
-var io = io.connect('http://172.17.0.3:3000');
+var io = io.connect('https://realtime-chat-sample.herokuapp.com');
 
 io.on('connection', function(socket){
 	console.log('connected with ' + name);
