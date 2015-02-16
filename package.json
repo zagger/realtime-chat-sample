@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app"
   },
-  "engine": {
-    "node": "v0.10.36",
+  "engines": {
+    "node": "0.10.36",
     "npm": "1.4.28"
   },
   "dependencies": {
