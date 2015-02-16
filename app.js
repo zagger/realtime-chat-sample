@@ -70,7 +70,7 @@ module.exports = app;
 
 
 
-var server = require('http').createServer(app).listen(3000);
+var server = require('http').createServer(app).listen(process.env.PORT || 3000);
 var io = require('socket.io').listen(server);
 
 // if you want validate CORS
@@ -78,36 +78,6 @@ var io = require('socket.io').listen(server);
 
 var socket = require('./my_modules/socket');
 
-//broadcasting logic
+//mulicasting logic
 socket.socketing(io);
 
-// var io =require('socket.io').listen(server);
-//
-//
-// io.on('connection', function(socket){
-// 	socket.on('broad', function(data) {
-// 		socket.broadcast.emit('br_recive', {value: data.value});
-// 	});
-// 	socket.on('disconnect', function(){
-// 		console.log("disconnected");
-// 	});
-// });
-
-// io.listen(3000).listen(server, { origins: '*:*' });
-
-// io.sockets.on('connection', function(socket) {
-// 	socket.on('connected', function(name) {
-// 		var msg = name + "さんが入室されました";
-// 		userHash[socket.id] = name;
-// 		io.sockets.emit("publish", {value: msg});
-// 	});
-//
-//
-// 	socket.on("disconnect", function () {
-//     if (userHash[socket.id]) {
-//       var msg = userHash[socket.id] + "が退出しました";
-//       delete userHash[socket.id];
-//       io.sockets.emit("publish", {value: msg});
-//     }
-//   });
-// });
