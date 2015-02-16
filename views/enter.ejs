@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/enter.css' />
+  </head>
+  <body>
+		<script src="/components/jquery/dist/jquery.min.js"></script>
+		<script src="/javascripts/enter.js"></script>
+
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+		<span>your name: </span><input type="text" id="member_name"></br>
+		<span>room name: </span><input type="text" id="room_name"></br>
+		<!-- <span>pass: </span><input type="text"></br> -->
+		<input type="button" value="enter" id="send_name">
+		<div>
+			<a href="/">return home</a>
+		</div>
+  </body>
+</html>

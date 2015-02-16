@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/chat.css' />
+  </head>
+  <body>
+		<script src="/components/jquery/dist/jquery.min.js"></script>
+		<script src="/javascripts/socket.io.js"></script>
+		<script src="/javascripts/<%= room_kind %>.js"></script>
+
+		<h1>You are in 
+			'<span id='title'><%= title %></span>'
+		</h1>
+		<p>
+			<span id='member_name'><%= member_name %></span>
+			, welcome to <%= title %> !
+		</p>
+		<textarea id="ta"></textarea>
+		<div id="member_area" >
+			<h2>members in <%= title %></h2>
+			<ul id="member_list">
+			</ul>
+		</div>
+		<div>
+			<a href="/">return home</a>
+		</div>
+  </body>
+</html>

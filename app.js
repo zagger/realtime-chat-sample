@@ -7,8 +7,11 @@ var bodyParser = require('body-parser');
 
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
-var socket = require('./routes/socket');
+var chat = require('./routes/chat');
+var enter = require('./routes/enter');
+var create = require('./routes/create');
+var public_enter = require('./routes/public_enter')
+
 
 var app = express();
 var userHash = {};
@@ -27,8 +30,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', routes);
-app.use('/users', users);
-app.use('/', socket);
+app.use('/', chat);
+app.use('/', enter);
+app.use('/', create);
+app.use('/', public_enter);
 
 
 // catch 404 and forward to error handler
@@ -66,54 +71,46 @@ app.use(function(err, req, res, next) {
 module.exports = app;
 
 
-var server = require('http').createServer(app);
-// .listen(3000);
-// var io = require('socket.io').listen(server);
-server.listen(3000);
-var io = require('socket.io').listen(server, { origins: '*:*' });
 
+
+var server = require('http').createServer(app).listen(3000);
+var io = require('socket.io').listen(server);
+
+// if you want validate CORS
 // io.set('origins', 'http://172.16.0.2:3000');
 
-// console.log(19);
-io.on('connection', function(skt){
+var socket = require('./my_modules/socket');
 
-	// skt.emit('publish', {value: "string"});
-	// skt.emit('connect', {value: "conect"});
-	console.log(skt.handshake.address);
+//broadcasting logic
+socket.socketing(io);
 
-	skt.on('broad', function(data) {
-		console.log('broadcasting');
-		// skt.broadcast.emit('br_recive', {value: 'broad data'});
-		skt.broadcast.emit('br_recive', {value: data.value});
-		skt.emit('br_recive', {value: data.value});
-		// skt.emit('br_recive', {value: 'broad data'});
-	});
+// var io =require('socket.io').listen(server);
+//
+//
+// io.on('connection', function(socket){
+// 	socket.on('broad', function(data) {
+// 		socket.broadcast.emit('br_recive', {value: data.value});
+// 	});
+// 	socket.on('disconnect', function(){
+// 		console.log("disconnected");
+// 	});
+// });
 
-	skt.on('connected', function() {
-		console.log('connected');
-		skt.emit('publish', {value: "string"});
-	});
+// io.listen(3000).listen(server, { origins: '*:*' });
 
-	skt.on('disconnect', function(){
-		console.log("disconnected");
-	});
-
-});
-
-// io.sockets.on('connection', function(skt) {
-// 	skt.on('connected', function(name) {
+// io.sockets.on('connection', function(socket) {
+// 	socket.on('connected', function(name) {
 // 		var msg = name + "さんが入室されました";
-// 		userHash[skt.id] = name;
+// 		userHash[socket.id] = name;
 // 		io.sockets.emit("publish", {value: msg});
 // 	});
 //
 //
-// 	skt.on("disconnect", function () {
-//     if (userHash[skt.id]) {
-//       var msg = userHash[skt.id] + "が退出しました";
-//       delete userHash[skt.id];
+// 	socket.on("disconnect", function () {
+//     if (userHash[socket.id]) {
+//       var msg = userHash[socket.id] + "が退出しました";
+//       delete userHash[socket.id];
 //       io.sockets.emit("publish", {value: msg});
 //     }
 //   });
 // });
-
