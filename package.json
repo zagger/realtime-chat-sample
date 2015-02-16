@@ -2,9 +2,6 @@
   "name": "realtime-chat-sample",
   "version": "0.0.0",
   "private": true,
-  "scripts": {
-    "start": "node app"
-  },
   "engines": {
     "node": "0.10.36",
     "npm": "1.4.28"
