@@ -20,6 +20,9 @@ var room_info = (function () {//singleton
 				members[room_name][member_name] = member_name;
 			}
 		},
+		delMember: function(room_name, member_name) {
+			delete members.room_name.member_name;
+		},
 		getMembers: function(room_name) {
 			return members[room_name];//object
 		}

@@ -1,8 +1,6 @@
 
 
-// var room_info = require('./my_modules/room_info.js');
 var r_i = require('./room_info.js');
-
 
 function socketing(io) {
 	io.on('connection', function(socket){
