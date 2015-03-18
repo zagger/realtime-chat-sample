@@ -1,5 +1,4 @@
 
-
 var r_i = require('./room_info.js');
 
 function socketing(io) {
@@ -19,19 +18,27 @@ function socketing(io) {
 			var room_name = data.room_name;
 			var member_name = data.member_name;
 			
-			r_i.room_info.addMember(room_name, member_name);
+			r_i.room_info.addMember(room_name, member_name, socket.id);
 			socket.join(room_name);
 
 			socket.to(room_name).emit('adding_menber', {
-				members: r_i.room_info.getMembers(room_name)//object
+				members: r_i.room_info.getMembers(socket.id)//object
 			});
 			socket.emit('adding_menber', {
-				members: r_i.room_info.getMembers(room_name)//object
+				members: r_i.room_info.getMembers(socket.id)//object
 			});
 		});
 
-		socket.on('disconnect', function(){
-		});
+		socket.on('disconnect', function() {
+			var room_name = r_i.room_info.getRoomName(socket.id);
+			r_i.room_info.delMember(socket.id);
+			socket.to(room_name).emit('adding_menber', {
+				members: r_i.room_info.getMembers(socket.id)//object
+			});
+			socket.emit('adding_menber', {
+				members: r_i.room_info.getMembers(socket.id)//object
+			});
+		})
 	});
 }
 

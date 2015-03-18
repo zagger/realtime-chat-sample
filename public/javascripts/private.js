@@ -1,10 +1,10 @@
 
-var io = io.connect('https://realtime-chat-sample.herokuapp.com');
+var remote_url = location.origin;
+var io = io.connect(remote_url);
 
 io.on('connection', function(socket){
 	console.log('connected with ' + name);
 });
-
 
 io.on('br_recive', function(br_data) {
 	$('#ta').val(br_data.value);
@@ -12,10 +12,11 @@ io.on('br_recive', function(br_data) {
 
 io.on('adding_menber', function(members) {
 	var list_str = "";
-	for( var member in members.members) {
-		list_str = list_str + '<li>' + member + '</li>'
-		$('#member_list').html(list_str);
+	console.log(members.members);
+	for( var id in members.members) {
+		list_str = list_str + '<li>' + members.members[id].name + '</li>';
 	}
+	$('#member_list').html(list_str);
 });
 
 $(function() {
@@ -33,6 +34,4 @@ $(function() {
 			room_kind: 'private'
 		});	
 	});
-
 });
-

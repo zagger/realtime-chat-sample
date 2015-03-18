@@ -1,8 +1,8 @@
 
-
 var room_info = (function () {//singleton
 	var passes = {};
 	var members = {};
+	var rooms = {};
 
 	return {
 		getPass: function(room_name) {
@@ -11,20 +11,34 @@ var room_info = (function () {//singleton
 		setPass: function(room_name, pass) {
 			passes[room_name] = pass;
 		},
-		addMember: function(room_name, member_name) {
-			if(members[room_name] === undefined) {
-				var member = {}
-				member[member_name] = member_name;
-				members[room_name] = member;
-			}else {
-				members[room_name][member_name] = member_name;
+		addMember: function(room_name, member_name, id) {
+			function addRoom(room_name, member) {
+				if(rooms[room_name] === undefined) {
+					rooms[room_name] = [member];
+				}else {
+					rooms[room_name].push(member);
+				}
+			}
+
+			if(members[id] === undefined) {
+				var member = {};
+				member.room_name = room_name;
+				member.name = member_name
+				members[id] = member;
+				addRoom(room_name, member);
 			}
 		},
-		delMember: function(room_name, member_name) {
-			delete members.room_name.member_name;
+		delMember: function(id) {
+			delete members[id];
 		},
-		getMembers: function(room_name) {
-			return members[room_name];//object
+		getRoomName: function(id) {
+			return members[id].room_name;
+		},
+		getMembers: function() {
+			return members;//object
+		},
+		getMembersInRoom: function(room_name) {
+			rooms[room_name];
 		}
 	};
 }());
