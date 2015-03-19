@@ -39,6 +39,12 @@ var room_info = (function () {//singleton
 		},
 		getMembersInRoom: function(room_name) {
 			rooms[room_name];
+		},
+		emptyMember: function(id) {
+			if(!members[id]) {
+				return true;
+			}
+			return false;
 		}
 	};
 }());
